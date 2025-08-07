@@ -16,5 +16,6 @@ Setup database dan jalankan aplikasi:
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
+php artisan db:seed --class=IncomingSeeder
 composer run dev
 ```
