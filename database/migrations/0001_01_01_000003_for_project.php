@@ -1,0 +1,59 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('incomings', function (Blueprint $table) {
+            $table->id();
+            $table->string('material_name');
+            $table->integer('quantity');
+            $table->string('satuan')->default('kg');
+            $table->timestamps();
+        });
+
+        Schema::create('productions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('incoming_id')->constrained();
+            $table->foreignId('product_id')->constrained();
+            $table->integer('quantity_used');
+            $table->integer('quantity_produced');
+            $table->timestamps();
+        });
+
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('stock')->default(0);
+            $table->decimal('price', 10, 2);
+            $table->timestamps();
+        });
+
+        Schema::create('invoices', function (Blueprint $table) {
+            $table->id();
+            $table->string('invoice_number')->unique();
+            $table->string('product_name');
+            $table->integer('quantity');
+            $table->decimal('total_price', 10, 2);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('products');
+        Schema::dropIfExists('productions');
+        Schema::dropIfExists('incomings');
+    }
+};

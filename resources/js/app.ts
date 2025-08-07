@@ -1,3 +1,7 @@
+// Import Bootstrap CSS and JS
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap'
+
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/vue3';
